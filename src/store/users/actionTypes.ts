@@ -1,0 +1,11 @@
+export const LOAD_USERS = "USERS:LOAD";
+export const USERS_LOADED = "USERS:LOADED";
+export const USER_LOADING_FAILED = "USERS:LOADING_FAILED";
+
+export const SAVE_USER = "USER:SAVE";
+export const USER_SAVED = "USER:SAVED";
+export const USER_SAVING_FAILED = "USER:SAVING_FAILED";
+
+export const ADD_FRIEND = "FRIEND:ADD";
+export const ADDED_AS_FRIEND = "FRIENDSHIP:ADDED";
+export const ADD_FRIENDSHIP_FAILED = "FRIENDSHIP:ADD_FAILED";

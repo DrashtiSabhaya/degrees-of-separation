@@ -1,18 +1,18 @@
+import store from "../store";
+
 export interface User {
   id: string;
   username: string;
-  friends: string[];
-}
-
-export interface Users {
-  users: User[];
+  friends?: string[];
 }
 
 export interface Friendship {
-  user_id_one: string;
-  user_id_two: string;
+  user1: User;
+  user2: User;
 }
 
 export interface ErrorData {
   message: string;
 }
+
+export type RootState = ReturnType<typeof store.getState>;

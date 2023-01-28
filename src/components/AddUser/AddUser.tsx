@@ -1,11 +1,7 @@
 import UserCard from "../UserCard/UserCard";
 
 const AddUser = () => {
-  return (
-    <>
-      <UserCard />
-    </>
-  );
+  return <UserCard />;
 };
 
 export default AddUser;

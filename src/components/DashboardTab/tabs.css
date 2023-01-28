@@ -1,5 +1,4 @@
 .tab-container {
-    width: 35vw;
     background: #ecf0f3;
     box-shadow: inset 6px 6px 6px #cbced1, inset -6px -6px 6px white;
     display: flex;
@@ -15,4 +14,10 @@
 .active {
     border-radius: 10px;
     box-shadow: 7px 7px 10px #cbced1, -7px -7px 10px white;
+}
+
+@media screen and (max-width: 450px) {
+    .tab-container {
+        flex-direction: column;
+    }
 }

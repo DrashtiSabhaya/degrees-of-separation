@@ -67,6 +67,46 @@ input {
     box-shadow: inset 6px 6px 6px #cbced1, inset -6px -6px 6px white;
 }
 
+.error-text {
+    color: #E10000;
+    font-size: 12px;
+}
+
+.success-message {
+    color: #3DAB3A;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.loader-container {
+    display: flex;
+    justify-content: center;
+}
+
+.loader {
+    border: 3px solid #94fff1;
+    border-top: 3px solid #ecf0f3;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 2s linear infinite;
+}
+
+.loader-dark {
+    border: 3px solid #b8cdca;
+    border-top: 3px solid #366796;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 button {
     color: white;
     margin-top: 25px;
@@ -78,6 +118,9 @@ button {
     box-shadow: 6px 6px 6px #cbced1, -6px -6px 6px white;
     transition: 0.5s;
     font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 button:hover {
@@ -92,19 +135,34 @@ h1 {
 }
 
 .user-list {
-    display: flex;
-    max-width: 35vw;
-    flex-wrap: wrap;
+    width: 40vw;
+    max-height: 68vh;
+    overflow-y: scroll;
+    min-width: 300px;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 1px;
+}
+
+::-webkit-scrollbar-track {
+    margin: 20px 0;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #cbced1;
+    border-radius: 8px;
 }
 
 .user-list-container {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     padding: 5px;
     margin: 10px;
     flex: 0 1 20%;
-    box-shadow: 3px 3px 2px 0px #cbced1;
+    box-shadow: 1px 1px 3px 1px #cbced1;
     border-radius: 5px;
 }
 
@@ -112,4 +170,8 @@ h1 {
     flex: 1;
     margin: 0 10px;
     text-align: left;
+}
+
+.user-path-container {
+    margin: 15px 0;
 }

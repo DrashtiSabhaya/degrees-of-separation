@@ -9,6 +9,7 @@ import {
   ADD_FRIEND,
   ADDED_AS_FRIEND,
   ADD_FRIENDSHIP_FAILED,
+  CLEAR_MESSAGES,
 } from "./actionTypes";
 import { User } from "../../constants/types";
 
@@ -53,7 +54,12 @@ const UserReducer = (state = initialState, action: AnyAction) => {
       state = { ...state, status: "saving" };
       break;
     case USER_SAVED:
-      state = { ...state, sucessMessage: action.payload.message, status: "saved" };
+      state = {
+        ...state,
+        sucessMessage: action.payload.successMessage,
+        users: [action.payload.user, ...state.users],
+        status: "saved",
+      };
       break;
     case USER_SAVING_FAILED:
       state = {
@@ -68,7 +74,12 @@ const UserReducer = (state = initialState, action: AnyAction) => {
       state = { ...state, status: "adding" };
       break;
     case ADDED_AS_FRIEND:
-      state = { ...state, sucessMessage: action.payload.message, status: "added" };
+      state = {
+        ...state,
+        sucessMessage: action.payload.message,
+        users: [...state.users, action.payload.user1, action.payload.user2],
+        status: "added",
+      };
       break;
     case ADD_FRIENDSHIP_FAILED:
       state = {
@@ -77,6 +88,15 @@ const UserReducer = (state = initialState, action: AnyAction) => {
           message: "Error" + action.payload.message,
         },
         status: "failed",
+      };
+      break;
+    case CLEAR_MESSAGES:
+      state = {
+        ...state,
+        sucessMessage: "",
+        error: {
+          message: "",
+        },
       };
       break;
     default:

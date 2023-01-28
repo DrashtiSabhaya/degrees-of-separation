@@ -1,4 +1,4 @@
-import { Friendship, User } from "../constants/types";
+import { Friendship } from "../constants/types";
 import { db } from "./firebase";
 import {
   collection,
@@ -11,11 +11,17 @@ import {
   updateDoc,
 } from "firebase/firestore";
 
-export const fetchAllUsers = () => {
+export const fetchAllUsers = async () => {
   try {
     const q = query(collection(db, "users"), orderBy("createdAt", "desc"));
-    onSnapshot(q, (querySnapshot) => {
-      return querySnapshot.docs;
+    return new Promise((resolve) => {
+      onSnapshot(q, async (querySnapshot) => {
+        const data = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          data: doc.data(),
+        }));
+        resolve(data);
+      });
     });
   } catch (e) {
     return {
@@ -24,30 +30,48 @@ export const fetchAllUsers = () => {
   }
 };
 
-export const addUser = async (data: User) => {
+export const addUser = async (username: string) => {
   try {
-    const docRef = await addDoc(collection(db, "users"), { ...data, createdAt: Timestamp.now() });
+    const docRef = await addDoc(collection(db, "users"), {
+      username: username,
+      createdAt: Timestamp.now(),
+    });
     console.log("Document written with ID: ", docRef.id);
-    return "User data saved successfully";
+    return {
+      data: {
+        successMessage: "User data saved successfully",
+        user: {
+          id: docRef.id,
+          username: username,
+          friends: [],
+        },
+      },
+    };
   } catch (e) {
     console.error("Error adding document: ", e);
     return {
-      message: "Error saving User",
+      message: "Error while saving User",
     };
   }
 };
 
 export const addUserFriendship = async (data: Friendship) => {
   try {
-    const taskDocRef1 = doc(db, "users", data.user_id_one);
-    const taskDocRef2 = doc(db, "users", data.user_id_two);
+    const taskDocRef1 = doc(db, "users", data.user1.id);
+    const taskDocRef2 = doc(db, "users", data.user2.id);
     await updateDoc(taskDocRef1, {
-      friends: [data.user_id_two],
+      friends: [...(data.user1?.friends || []), data.user2.id],
     });
     await updateDoc(taskDocRef2, {
-      friends: [data.user_id_one],
+      friends: [...(data.user2?.friends || []), data.user1.id],
     });
-    return "Added as Friend";
+    return {
+      data: {
+        message: "Added as Friend",
+        user1: { ...data.user1, friends: [...(data.user1?.friends || []), data.user2.id] },
+        user2: { ...data.user2, friends: [...(data.user2?.friends || []), data.user1.id] },
+      },
+    };
   } catch (e) {
     console.error("Error adding document: ", e);
     return {

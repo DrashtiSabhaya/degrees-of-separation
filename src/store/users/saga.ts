@@ -13,6 +13,7 @@ import { addUser, addUserFriendship, fetchAllUsers } from "../../api/users";
 import { Friendship, User } from "../../constants/types";
 
 export interface ResponseGenerator {
+  [x: string]: any;
   config?: any;
   data?: any;
   headers?: any;
@@ -24,14 +25,22 @@ export interface ResponseGenerator {
 function* onLoadUsers() {
   try {
     const response: ResponseGenerator = yield call(() => fetchAllUsers());
-    yield put(getUsersSuccess(response.data));
+    let userData: User[] = [];
+    response.forEach((user: any) =>
+      userData.push({
+        id: user.id,
+        username: user.data.username,
+        friends: user.data?.friends || [],
+      })
+    );
+    yield put(getUsersSuccess(userData));
   } catch (error: any) {
     yield put(userLoadingFailed(error));
   }
 }
 
 function* onSaveUser(action: AnyAction) {
-  const data: User = action.payload;
+  const data: string = action.payload;
   try {
     const response: ResponseGenerator = yield call(addUser, data);
     yield put(saveUserSuceess(response.data));
@@ -44,6 +53,7 @@ function* onAddFriend(action: AnyAction) {
   const data: Friendship = action.payload;
   try {
     const response: ResponseGenerator = yield call(addUserFriendship, data);
+    console.log(response);
     yield put(friendshipAddingSuceess(response.data));
   } catch (error: any) {
     yield put(friendshipAddFailed(error));

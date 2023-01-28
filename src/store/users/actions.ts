@@ -1,4 +1,4 @@
-import { ErrorData, Friendship, User, Users } from "../../constants/types";
+import { ErrorData, Friendship, User } from "../../constants/types";
 import {
   LOAD_USERS,
   USERS_LOADED,
@@ -9,6 +9,7 @@ import {
   ADD_FRIEND,
   ADDED_AS_FRIEND,
   ADD_FRIENDSHIP_FAILED,
+  CLEAR_MESSAGES,
 } from "./actionTypes";
 
 export const getUsers = () => {
@@ -17,7 +18,7 @@ export const getUsers = () => {
   };
 };
 
-export const getUsersSuccess = (users: Users) => {
+export const getUsersSuccess = (users: User[]) => {
   return {
     type: USERS_LOADED,
     payload: users,
@@ -31,7 +32,7 @@ export const userLoadingFailed = (error: ErrorData) => {
   };
 };
 
-export const saveUser = (user: User) => {
+export const saveUser = (user: string) => {
   return {
     type: SAVE_USER,
     payload: user,
@@ -59,10 +60,10 @@ export const addFriendship = (data: Friendship) => {
   };
 };
 
-export const friendshipAddingSuceess = (successMessage: string) => {
+export const friendshipAddingSuceess = (data: object) => {
   return {
     type: ADDED_AS_FRIEND,
-    payload: successMessage,
+    payload: data,
   };
 };
 
@@ -70,5 +71,11 @@ export const friendshipAddFailed = (error: ErrorData) => {
   return {
     type: ADD_FRIENDSHIP_FAILED,
     payload: error,
+  };
+};
+
+export const clearMessages = () => {
+  return {
+    type: CLEAR_MESSAGES,
   };
 };

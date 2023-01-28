@@ -1,0 +1,33 @@
+.drop-down {
+    width: 300px;
+    text-align: left;
+    margin-top: 30px;
+}
+
+.drop-down-box {
+    background: #ecf0f3;
+    padding: 10px;
+    padding-left: 20px;
+    height: 35px;
+    font-size: 14px;
+    border-radius: 10px;
+    box-shadow: inset 6px 6px 6px #cbced1, inset -6px -6px 6px white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.drop-down-list {
+    position: absolute;
+    background: #ecf0f3;
+    width: 74%;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: inset 3px 3px 2px 0px #cbced1;
+    max-height: 150px;
+    overflow-y: scroll;
+}
+
+.drop-down-item {
+    padding: 10px 0;
+}

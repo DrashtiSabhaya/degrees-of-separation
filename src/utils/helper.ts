@@ -1,38 +1,41 @@
-export const findDegree = (u: number, v: number, adj: number[][]): number[][] => {
-  const degrees: number[][] = [];
+import { User } from "../constants/types";
 
-  function findPath(u: number, v: number, adj: number[][]): void {
-    let visited: boolean[] = new Array(adj.length).fill(false);
-    let path: number[] = [];
-    path.push(u);
-    searchDFS(u, v, adj, visited, path);
+export const findDegree = (user1: User, user2: User, userList: User[]) => {
+  const degrees: User[][] = [];
+
+  function findPath(user1: User, user2: User, userList: User[]): void {
+    let visited: string[] = [];
+    let path: User[] = [];
+    path.push(user1);
+    searchDFS(user1, user2, userList, visited, path);
   }
 
   function searchDFS(
-    u: number,
-    v: number,
-    adj: number[][],
-    visited: boolean[],
-    path: number[]
+    user1: User,
+    user2: User,
+    userList: User[],
+    visited: string[],
+    path: User[]
   ): void {
-    visited[u] = true;
-    if (u === v) {
+    visited.push(user1.id);
+    if (user1.id === user2.id) {
       degrees.push([...path]);
     } else {
-      for (let i = 0; i < adj[u].length; i++) {
-        const y = adj[u][i];
-        if (!visited[y]) {
-          visited[y] = true;
-          path.push(y);
-          searchDFS(y, v, adj, visited, path);
-          path.pop();
+      if (user1.friends?.length) {
+        for (let i = 0; i < user1.friends.length; i++) {
+          const y: User | undefined = userList.find((user) => user.id === user1.friends?.[i]);
+          if (y && !visited.includes(y.id)) {
+            visited.push(y.id);
+            path.push(y);
+            searchDFS(y, user2, userList, visited, path);
+            path.pop();
+          }
         }
       }
     }
-    visited[u] = false;
   }
 
-  findPath(u, v, adj);
+  findPath(user1, user2, userList);
 
   return degrees;
 };

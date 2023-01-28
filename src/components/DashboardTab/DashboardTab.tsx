@@ -13,6 +13,7 @@ const DashboardTab = ({ activeTab, setActiveTab }: TabProps) => {
         <div
           onClick={() => setActiveTab(tab)}
           className={`tab ${activeTab === tab ? "active" : ""}`}
+          key={tab}
         >
           {tab}
         </div>

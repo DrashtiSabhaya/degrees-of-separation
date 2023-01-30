@@ -75,7 +75,7 @@ const UserReducer = (state = initialState, action: AnyAction) => {
       break;
     case ADDED_AS_FRIEND:
       const updatedUsers = state.users.filter(
-        (user) => user.id === action.payload.use1.id || user.id === action.payload.use2.id
+        (user) => user.id !== action.payload.user1.id && user.id !== action.payload.user2.id
       );
       state = {
         ...state,

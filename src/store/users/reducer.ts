@@ -74,10 +74,13 @@ const UserReducer = (state = initialState, action: AnyAction) => {
       state = { ...state, status: "adding" };
       break;
     case ADDED_AS_FRIEND:
+      const updatedUsers = state.users.filter(
+        (user) => user.id === action.payload.use1.id || user.id === action.payload.use2.id
+      );
       state = {
         ...state,
         sucessMessage: action.payload.message,
-        users: [...state.users, action.payload.user1, action.payload.user2],
+        users: [action.payload.user1, action.payload.user2, ...updatedUsers],
         status: "added",
       };
       break;

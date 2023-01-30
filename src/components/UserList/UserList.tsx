@@ -17,7 +17,7 @@ const UserList = () => {
       getUsersData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [users]);
 
   return (
     <div className="container user-list">
